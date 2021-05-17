@@ -10,6 +10,10 @@ router.get('/', (req, res) => {
   res.send('hello')
 })
 
+router.get('/protected', (req,res) => {
+  res.send('')
+})
+
 // signup and create collection in DB with hashed password
 router.post('/signup', (req,res) => {
   console.log(req.body) //testing functionality in postman
