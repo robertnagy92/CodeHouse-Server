@@ -17,6 +17,8 @@ router.get("/user/:id", isLoggedIn, (req, res) => {
   })  
 });
 
+
+
 //follow user
 
 

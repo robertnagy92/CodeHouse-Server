@@ -12,18 +12,9 @@ let PostSchema = new Schema({
   },
   image: {
     type: String,
-    required: true
+    default: "no img"
   },
-  likes: [{
-    type: Schema.Types.ObjectId,
-    ref:"User"}],
-    comments: [{
-        text:String,
-        postedBy:{
-          type: Schema.Types.ObjectId,
-          ref:"User"}
-    }],
-    postedBy:{
+  postedBy:{
        type: Schema.Types.ObjectId,
        ref:"User"
     }

@@ -13,26 +13,23 @@ router.get('/allposts', isLoggedIn, (req,res)=>{
   
 })
 
-router.post('/createpost',isLoggedIn,(req,res)=>{
-  const {title,body,pic} = req.body 
-  if(!title || !body || !pic){
-    return  res.status(422).json({error:"Please fill all fields"})
+router.post('/createpost', isLoggedIn, (req,res) => {
+  const {title, body, postedBy} = req.body
+  if(!title || !body){
+    return res.status(422).json({error: 'Please fill all fields'})
   }
-  req.user.password = undefined
-  const post = new PostModel({
+    const post = new PostModel({
       title,
       body,
-      image:pic,
-      postedBy:req.user
-  })
-  post.save().then(result=>{
-      res.json({post:result})
-  })
-  .catch(err=>{
+      postedBy: req.user
+    })
+    post.save().then(result => {
+      res.json({post: result})
+    }) 
+    .catch(err => {
       console.log(err)
-  })
+    })
 })
-
 
 
 

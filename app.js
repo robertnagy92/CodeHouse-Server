@@ -25,6 +25,7 @@ require('./models/Post.model')
 
 app.use(express.json())
 app.use(require('./routes/auth.routes'))
+app.use(require('./routes/posts.routes'))
 
 
 
