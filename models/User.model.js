@@ -22,18 +22,16 @@ let UserSchema = new Schema({
     type: String,
     default: "",
   },
-  followers: {
-    type: Array,
-    default: [],
-  },
-  follows: {
-    type: Array,
-    default: [],
-  }
+  followers:[{
+    type: Schema.Types.ObjectId,
+    ref:"User"}],
+  follows:[{
+    type: Schema.Types.ObjectId,
+    ref:"User"}]
 }, { timestamps: true })
 
 // 2. Define your model
-let UserModel = model('user', UserSchema)
+let UserModel = model('User', UserSchema)
 
 // 3. Export your Model with 'module.exports'
 module.exports = UserModel
