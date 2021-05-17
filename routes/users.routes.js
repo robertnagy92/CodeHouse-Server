@@ -6,7 +6,7 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 //get individual user
 router.get("/user/:id", isLoggedIn, (req, res) => {
   UserModel.findById(req.params.id)
-  .then(() => {
+  .then((res) => {
        res.status(200).json(req.session.loggedInUser)
   })
   .catch((err) => {
@@ -23,4 +23,4 @@ router.get("/user/:id", isLoggedIn, (req, res) => {
 
 
 
-module.exports = router;
+// module.exports = router;

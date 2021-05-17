@@ -6,7 +6,7 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 router.get('/allposts', isLoggedIn, (req,res)=>{
   PostModel.find()
   .then((posts)=>{
-      res.json({posts})
+      res.json(posts)
   }).catch(err=>{
       console.log(err)
   })
