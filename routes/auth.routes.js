@@ -4,14 +4,15 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const UserModel = require('../models/User.model');
 const {JWT_KEY} = require('../config/keys')
+const isLoggedIn = require('../middleware/isLoggedIn')
 
 //get user - testing
 router.get('/', (req, res) => {
   res.send('hello')
 })
 
-router.get('/protected', (req,res) => {
-  res.send('')
+router.get('/protected', isLoggedIn, (req,res) => {
+  res.send('Welcome user')
 })
 
 // signup and create collection in DB with hashed password
