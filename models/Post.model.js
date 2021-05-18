@@ -12,7 +12,7 @@ let PostSchema = new Schema({
   },
   image: {
     type: String,
-    default: "no img"
+    required:true
   },
   postedBy:{
        type: Schema.Types.ObjectId,
