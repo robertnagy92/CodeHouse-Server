@@ -1,4 +1,7 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
+const mongoose = require('mongoose')
+const {ObjectId} = mongoose.Schema.Types //bug fix
+//for some reason if i don't destructure id i can't get the postedBy field values when i map over them
 
 // 1. Define your schema
 let PostSchema = new Schema({
@@ -14,11 +17,16 @@ let PostSchema = new Schema({
     type: String,
     required:true
   },
-  postedBy:{
-       type: Schema.Types.ObjectId,
-       ref:"User"
+  likes: [
+    {
+      type: ObjectId, 
+      ref: "User"
     }
-},{timestamps:true})
+  ],
+  postedBy:{
+    type: ObjectId,
+    ref:"User"},
+})
 
 
 // 2. Define your model

@@ -15,8 +15,7 @@ let UserSchema = new Schema({
     required: true
   },
   profilePicture: {
-    type: String,
-    default: "",
+    type: String
   },
   followers:[{
     type: Schema.Types.ObjectId,

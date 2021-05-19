@@ -8,7 +8,7 @@ router.get('/allposts', isLoggedIn, (req,res)=>{
   PostModel.find()  //no parameters passed => results in finding all posts
   .populate('postedBy', "_id username") //populate the response with the id and name of the user who made the post
   .then((posts)=>{
-      res.json(posts)
+      res.json({posts})
   }).catch(err=>{
       console.log(err)
   })
@@ -18,7 +18,7 @@ router.get('/allposts', isLoggedIn, (req,res)=>{
 //POST
 //creates a new post
 router.post('/createpost', isLoggedIn, (req,res) => {
-  const {title, body, picture, postedBy} = req.body
+  const {title, body, picture} = req.body
   if(!title || !body || !picture){
     return res.status(422).json({error: 'Please fill all fields'})
   }
@@ -37,7 +37,7 @@ router.post('/createpost', isLoggedIn, (req,res) => {
     })
 })
 
-//GET my post
+//GET my post request
   router.get('/myposts', isLoggedIn, (req,res) => {
     PostModel.find({postedBy: req.user._id}) //get all posts by the logged in user
     .populate('postedBy', "_id username") // populate feed with id&name of user which posted
@@ -46,6 +46,36 @@ router.post('/createpost', isLoggedIn, (req,res) => {
     })
     .catch(err => {
       console.log(err)
+    })
+  })
+
+  //PUT likes request
+  router.put('/like', isLoggedIn, (req,res) => {
+    PostModel.findByIdAndUpdate(req.body.postId, {
+      $push:{likes: req.user._id}
+    },{
+      new: true //getting new updated record
+    }).exec((err, result) => {
+      if(err){
+        return res.status(422).json({error: err})
+      }else{
+        res.json(result)
+      }
+    })
+  })
+
+  //PUT unlike request
+  router.put('/unlike', isLoggedIn, (req,res) => {
+    PostModel.findByIdAndUpdate(req.body.postId, {
+      $ull:{likes: req.user._id}
+    },{
+      new: true //getting new updated record
+    }).exec((err, result) => {
+      if(err){
+        return res.status(422).json({error: err})
+      }else{
+        res.json(result)
+      }
     })
   })
 
