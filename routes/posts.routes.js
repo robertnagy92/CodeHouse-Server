@@ -52,7 +52,7 @@ router.post('/createpost', isLoggedIn, (req,res) => {
   //PUT likes request
   router.put('/like', isLoggedIn, (req,res) => {
     PostModel.findByIdAndUpdate(req.body.postId, {
-      $push:{likes: req.user._id}
+      $push:{likes: req.user._id} 
     },{
       new: true //getting new updated record
     }).exec((err, result) => {
@@ -67,10 +67,31 @@ router.post('/createpost', isLoggedIn, (req,res) => {
   //PUT unlike request
   router.put('/unlike', isLoggedIn, (req,res) => {
     PostModel.findByIdAndUpdate(req.body.postId, {
-      $ull:{likes: req.user._id}
+      $pull:{likes: req.user._id}
     },{
-      new: true //getting new updated record
+      new: true 
     }).exec((err, result) => {
+      if(err){
+        return res.status(422).json({error: err})
+      }else{
+        res.json(result)
+      }
+    })
+  })
+
+  //PUT comments request
+  router.put('/comment', isLoggedIn, (req,res) => {
+    const comment = {
+      text: req.body.text,
+      postedBy: req.user._id
+    }
+    PostModel.findByIdAndUpdate(req.body.postId, {
+      $push:{comments: comment}
+    },{
+      new: true 
+    })
+    .populate("comments.postedBy", "_id name")
+    .exec((err, result) => {
       if(err){
         return res.status(422).json({error: err})
       }else{
