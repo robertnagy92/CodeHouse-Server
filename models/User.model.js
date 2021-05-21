@@ -15,7 +15,8 @@ let UserSchema = new Schema({
     required: true
   },
   profilePicture: {
-    type: String
+    type: String,
+    default: "https://res.cloudinary.com/do6dzkp4n/image/upload/v1621574504/download_cz9fam.png"
   },
   followers:[{
     type: Schema.Types.ObjectId,

@@ -30,4 +30,4 @@ router.get('/user/:id',isLoggedIn,(req,res)=>{
 
 
 
-// module.exports = router;
+module.exports = router;

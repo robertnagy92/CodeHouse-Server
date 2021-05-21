@@ -29,6 +29,7 @@ app.use(express.json())
 app.use(cors())
 app.use(require('./routes/auth.routes'))
 app.use(require('./routes/posts.routes'))
+app.use(require('./routes/users.routes'))
 
 
 

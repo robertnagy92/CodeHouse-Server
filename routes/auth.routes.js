@@ -10,15 +10,10 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 router.get('/', (req, res) => {
   res.send('hello')
 })
-
-router.get('/protected', isLoggedIn, (req,res) => {
-  res.send('Welcome user')
-})
-
 // signup and create collection in DB with hashed password
 router.post('/signup', (req,res) => {
   console.log(req.body) //testing functionality in postman
-  const {username, email, password} = req.body
+  const {username, email, password, profilePicture} = req.body
   if(!email || !password || !username){
     return res.status(422).json({error: "Please fill all fields"})
   }
@@ -32,7 +27,8 @@ bcrypt.hash(password,10)
     const user = new UserModel({
       email,
       password: hashedpassword,
-      username
+      username,
+      profilePicture
     })
     user.save()
     .then(user => {
@@ -65,8 +61,8 @@ router.post('/signin', (req, res) => {
       if(match){
         //res.json({message: 'Sign In was succesful'})
         const token = jwt.sign({_id: savedUser._id}, JWT_KEY)
-        const {_id, username, email} = savedUser
-        res.json({token,user:{_id, username, email}})
+        const {_id, username, email, profilePicture} = savedUser
+        res.json({token,user:{_id, username, email, profilePicture}})
       }
       else{
         return res.status(422).json({error: "Invalid email or password"})
